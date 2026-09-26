@@ -1,0 +1,707 @@
+{
+ "schema_version": 1,
+ "kind": "public-snapshot",
+ "published_at": "2026-09-26T07:10:05Z",
+ "reviewed_at": "2026-09-26T07:10:05Z",
+ "workers": {
+  "claude": {
+   "lead": false,
+   "stale_lead": false,
+   "subagents": 0,
+   "stale_subagents": 0
+  },
+  "codex": {
+   "lead": true,
+   "stale_lead": false,
+   "subagents": 1,
+   "stale_subagents": 0
+  }
+ },
+ "sources": [
+  {
+   "source": "Codex",
+   "available": true,
+   "updated_at": "2026-09-26T07:10:05Z"
+  },
+  {
+   "source": "Claude",
+   "available": true,
+   "updated_at": "2026-09-26T03:47:49Z"
+  }
+ ],
+ "projects": [
+  {
+   "id": "p01",
+   "name": "Signal Garden",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": true,
+   "estimate": {
+    "progress": 95,
+    "label": "Phone audio and swipe repairs live",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T10:22:09Z"
+   },
+   "blurb": "Compose music that grows a living, readable landscape.",
+   "current_work": "Background audio now uses pre-rendered buffers, with no late chunks or gaps in the sixfold CPU-throttled check. Smooth strip swiping and hold-drag editing are live.",
+   "next_checkpoint": "Ready for a real-phone recheck when you return.",
+   "limitation": "Real phone screen-off behavior remains unverified.",
+   "milestone": "Phone playback and strip fixes",
+   "reviewed_at": "2026-09-25T10:22:09Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Verification",
+      "Implementation"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Integration",
+      "Implementation"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "signal-garden/",
+    "title": "Signal Garden — A living instrument",
+    "built_at": "2026-09-26T03:47:51Z",
+    "source": "8a234db"
+   }
+  },
+  {
+   "id": "p02",
+   "name": "Tidal Archive",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": true,
+   "estimate": {
+    "progress": 90,
+    "label": "Awaiting owner re-playtest before feedback",
+    "reviewer": "Claude",
+    "reviewed_at": "2026-09-25T21:28:21Z"
+   },
+   "blurb": "A narrative exploration game set in a drowning city.",
+   "current_work": "The owner has playtested it once and wants to play it again before giving feedback.",
+   "next_checkpoint": "Iterate on the owner's feedback after the re-playtest.",
+   "limitation": "Issues noted in the first owner playtest are not yet addressed.",
+   "milestone": "Complete",
+   "reviewed_at": "2026-09-25T21:28:21Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "tidal-archive/",
+    "title": "Tidal Archive",
+    "built_at": "2026-09-26T03:47:53Z",
+    "source": "9f1a755"
+   }
+  },
+  {
+   "id": "p03",
+   "name": "Lanternfish",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": true,
+   "estimate": {
+    "progress": 90,
+    "label": "Awaiting owner re-playtest before feedback",
+    "reviewer": "Claude",
+    "reviewed_at": "2026-09-25T21:28:21Z"
+   },
+   "blurb": "A fantasy 16-bit computer with its own language, IDE and debugger.",
+   "current_work": "The owner has playtested it once and wants to play it again before giving feedback.",
+   "next_checkpoint": "Iterate on the owner's feedback after the re-playtest.",
+   "limitation": "Issues noted in the first owner playtest are not yet addressed.",
+   "milestone": "Complete",
+   "reviewed_at": "2026-09-25T21:28:21Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "lanternfish/",
+    "title": "Lanternfish LF-16",
+    "built_at": "2026-09-26T03:47:56Z",
+    "source": "969134d"
+   }
+  },
+  {
+   "id": "p04",
+   "name": "Event Horizon",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 88,
+    "label": "Ready for your next playtest",
+    "reviewer": "Claude",
+    "reviewed_at": "2026-09-25T12:15:11Z"
+   },
+   "blurb": "Fly close to a black hole and come home to people who kept living.",
+   "current_work": "Your interface requests are live (burn plan, full-length strip, pannable map, plain labels, step-by-step reveals, fine steps, quiet mail). Missions 5 and 6 now carry real home-clock stakes with Ruth and Pip.",
+   "next_checkpoint": "Replay from mission 1, or jump to missions 5 and 6 for the new stakes, and tell us what still confuses.",
+   "limitation": "Mission 7 is unchanged; the late-mission choices are measured and tested but not yet played by a person.",
+   "milestone": "Interface repairs; next mission update agreed",
+   "reviewed_at": "2026-09-25T12:15:11Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "event-horizon/",
+    "title": "Event Horizon",
+    "built_at": "2026-09-26T03:47:58Z",
+    "source": "610fde8"
+   }
+  },
+  {
+   "id": "p05",
+   "name": "Foldsmith+",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 1,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 95,
+    "label": "Private AI helper connected and ready to try",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-26T07:10:05Z"
+   },
+   "blurb": "A papercraft workshop: pick a model, watch it fold, print the kit.",
+   "current_work": "The hosted helper is enabled with a private access token and a persistent total spending cap. One real generated design passed geometry and print checks.",
+   "next_checkpoint": "Try a small custom design, inspect its assembly steps, and test a printed model. Handwritten examples remain available without access.",
+   "limitation": "The free server may need about a minute to wake. Broader generated design quality and physical fabrication still need human feedback.",
+   "milestone": "Printable kit ready for integration",
+   "reviewed_at": "2026-09-26T07:10:05Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Playtest"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "foldsmith/",
+    "title": "Foldsmith · Papercraft for curious hands",
+    "built_at": "2026-09-26T07:08:17Z",
+    "source": "3f651da"
+   }
+  },
+  {
+   "id": "p06",
+   "name": "Impossible Rooms",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 89,
+    "label": "Targeted window repair live; visual recheck needed",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T20:25:00Z"
+   },
+   "blurb": "Architecture that cannot exist, explored in first person.",
+   "current_work": "Independent traversal reached five of seven lanterns. The reproduced window defect has a targeted repair; build and geometry checks pass.",
+   "next_checkpoint": "Check the distant round window from the wardrobe and continue the unfinished traversal when convenient.",
+   "limitation": "Memory guards prevented the matching after-repair screenshot. Stairs and Heart were not reached in the blind run; physical mouse feel remains unverified.",
+   "milestone": "Some visual fixes live; recursion repair active",
+   "reviewed_at": "2026-09-25T20:25:00Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "impossible-rooms/",
+    "title": "Impossible Rooms",
+    "built_at": "2026-09-26T03:48:06Z",
+    "source": "6aed7e4"
+   }
+  },
+  {
+   "id": "p07",
+   "name": "Worldseed",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 80,
+    "label": "Visual repair round merged",
+    "reviewer": "Claude",
+    "reviewed_at": "2026-09-25T15:49:16Z"
+   },
+   "blurb": "Watch life evolve across branching histories of a seeded world.",
+   "current_work": "Creatures vary more in colour, markings, coat and proportions; each biome has its own light and plants; you can walk into the sea; drawing cost per creature fell about 12x. Live locally on port 5197.",
+   "next_checkpoint": "Owner playtest, plus a re-run of the GPU fps page to confirm the first-flip stutter is gone.",
+   "limitation": "The stutter fix is verified only in software rendering so far.",
+   "milestone": "Ready for your playtest",
+   "reviewed_at": "2026-09-25T15:49:16Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Playtest",
+      "Design review"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "worldseed/",
+    "title": "Worldseed",
+    "built_at": "2026-09-26T03:48:08Z",
+    "source": "ca57ad0"
+   }
+  },
+  {
+   "id": "p08",
+   "name": "Afterimage",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 92,
+    "label": "Afterimage revealed and ready to play",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T21:12:15Z"
+   },
+   "blurb": "One courtyard across a century: gather testimony, change the past, and decide what to tell Maya about the bell.",
+   "current_work": "The independent ending check, evidence-boundary repairs, save and reopen and readable export checks passed.",
+   "next_checkpoint": "Explore the courtyard across eras, collect evidence and revisit the consequences of your choices.",
+   "limitation": "The latest independent route covered one ending; other eras, accounts and physical-device feel still need your feedback.",
+   "milestone": "First expansion chapter",
+   "reviewed_at": "2026-09-25T21:12:15Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "afterimage/",
+    "title": "Afterimage",
+    "built_at": "2026-09-26T03:48:19Z",
+    "source": "bd8bfd4"
+   }
+  },
+  {
+   "id": "p09",
+   "name": "Glyphcraft",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 90,
+    "label": "Independent author round completed",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T19:22:03Z"
+   },
+   "blurb": "Decode a mountain keeper's script, answer in it, then make the script your own and export a real font.",
+   "current_work": "The independent author session and export inspection passed. Navigation repairs and a readable accepted-work preview are verified and merged.",
+   "next_checkpoint": "Owner playtest when convenient.",
+   "limitation": "Physical device behavior and installed export use remain unverified.",
+   "milestone": "One bounded experience revision underway",
+   "reviewed_at": "2026-09-25T19:22:03Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "glyphcraft/",
+    "title": "Kettle Pass",
+    "built_at": "2026-09-26T03:48:17Z",
+    "source": "1d7108d"
+   }
+  },
+  {
+   "id": "p10",
+   "name": "Surveyor",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 92,
+    "label": "Surveyor revealed and ready to play",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T21:12:15Z"
+   },
+   "blurb": "Survey a landscape by eye, draw the map, and send a courier to walk it; their notes tell you where your map was wrong.",
+   "current_work": "All three expeditions are implemented. The final independent delivery and save and reopen succeeded; the report layout repair passed three screen sizes.",
+   "next_checkpoint": "Start at Windbreak Ridge, make your field sheet and send Oriel along your own route.",
+   "limitation": "The final run completed one expedition; an earlier task was interrupted. Natural full-journey transfer and physical-device feel remain unverified.",
+   "milestone": "First playable slice under validation",
+   "reviewed_at": "2026-09-25T21:12:15Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "surveyor/",
+    "title": "Windbreak Ridge — Surveyor",
+    "built_at": "2026-09-26T03:48:25Z",
+    "source": "dea9b7a"
+   }
+  },
+  {
+   "id": "p11",
+   "name": "Automata",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 85,
+    "label": "Latest playtest repairs are live",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-25T14:58:23Z"
+   },
+   "blurb": "Draw motion and build hand-cranked mechanical sculptures.",
+   "current_work": "Port 5198 has persistent camera positioning, Front, Side and Top views, steadier panels, restored examples and clearer timing. The latest agent checks passed.",
+   "next_checkpoint": "User playtest when you return.",
+   "limitation": "Real GPU feel and timing remain for the user to assess.",
+   "milestone": "Fourth repair round",
+   "reviewed_at": "2026-09-25T14:58:23Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "playable",
+    "url": "automata/",
+    "title": "Automata",
+    "built_at": "2026-09-26T03:48:12Z",
+    "source": "ad6a111"
+   }
+  },
+  {
+   "id": "p12",
+   "name": "Parlour",
+   "surprise": false,
+   "stage": "Awaiting User Playtest",
+   "workers": {
+    "claude": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    },
+    "codex": {
+     "lead": false,
+     "stale_lead": false,
+     "subagents": 0,
+     "stale_subagents": 0
+    }
+   },
+   "original_complete": false,
+   "estimate": {
+    "progress": 97,
+    "label": "Hosted multiplayer ready for device playtest",
+    "reviewer": "Codex",
+    "reviewed_at": "2026-09-26T05:54:40Z"
+   },
+   "blurb": "Two party games for a TV and phones: a memory game about invented details, and a co-op patent office.",
+   "current_work": "The approved online game is open. Private live updates, reconnect and a real hosted restart passed; saved reports and seats survived.",
+   "next_checkpoint": "Play with a host screen and separate player devices, then report any game-flow or connection issues.",
+   "limitation": "Free hosting may take about a minute to wake. Physical multi-device playtesting remains.",
+   "milestone": "Early gate passed; full build queued",
+   "reviewed_at": "2026-09-26T05:54:40Z",
+   "activity": [
+    {
+     "source": "Codex",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": null
+    },
+    {
+     "source": "Claude",
+     "signals": [
+      "Coordination"
+     ],
+     "reported_at": "2026-09-25T04:34:00Z"
+    }
+   ],
+   "demo": {
+    "state": "published",
+    "url": "https://parlour-studio.onrender.com",
+    "note": "First load may take about a minute while the free server wakes."
+   }
+  }
+ ]
+}

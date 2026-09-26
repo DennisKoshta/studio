@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#2a211b" />
+    <title>Impossible Rooms</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='6' y='4' width='20' height='26' rx='2' fill='%23c9a24a'/%3E%3Crect x='10' y='8' width='12' height='22' fill='%23ffd27a'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index-BB5BEFab.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BC5Oqzym.css">
+  </head>
+  <body>
+    <canvas id="view" aria-label="Impossible Rooms first-person view"></canvas>
+    <div id="vignette" class="hidden"></div>
+    <div id="wallfade"></div>
+    <div id="intro" class="hidden"><p>You let yourself in. The front door swings shut behind you, and the lock turns.</p></div>
+
+    <div id="title" class="screen">
+      <div class="title-card">
+        <p class="kicker">a procedurally generated house</p>
+        <h1>Impossible Rooms</h1>
+        <p class="tagline">An ordinary house, mostly. Walk it slowly. Notice what should not be possible.</p>
+        <label class="seed-label" for="seed">House seed</label>
+        <div class="seed-row">
+          <input id="seed" type="text" spellcheck="false" autocomplete="off" maxlength="200" />
+          <button id="reroll" type="button" title="Another house" aria-label="Random seed">&#x21bb;</button>
+        </div>
+        <button id="enter" type="button" class="primary">Enter the house</button>
+        <div class="title-links">
+          <button id="open-specimens" type="button">Specimens</button>
+          <button id="open-architect" type="button">Architect</button>
+        </div>
+        <div id="architect" class="hidden">
+          <p class="arch-note">Choose the impossibilities, and how many wings to spread them over. The seed text still decides everything else, and the house can be shared by its seed.</p>
+          <div id="arch-blocks"></div>
+          <label class="arch-wings">Wings <input id="arch-wings" type="range" min="3" max="6" step="1" value="4" /> <span id="arch-wings-n">4</span></label>
+          <button id="arch-build" type="button" class="primary">Build this house</button>
+        </div>
+        <p class="controls-hint">
+          <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk &middot; mouse look &middot; <kbd>Z</kbd><kbd>C</kbd> snap turn &middot; <kbd>E</kbd> open &middot; <kbd>Shift</kbd> hurry &middot;
+          <kbd>N</kbd> chalk a mark &middot; <kbd>Tab</kbd> or <kbd>J</kbd> journal &middot; <kbd>M</kbd> map &middot; <kbd>H</kbd> follow the thread home &middot; <kbd>U</kbd> sound &middot; <kbd>F</kbd> frame rate &middot; <kbd>Esc</kbd> pause
+        </p>
+        <p class="notice-line">When something feels wrong, press <kbd>N</kbd> to chalk a mark. The house tells you what you caught when it ends.</p>
+        <p class="goal">Light every lantern in the house. Each one sits somewhere only an impossibility can take you. Then lift the great lantern in the Heart to end the house.</p>
+      </div>
+    </div>
+
+    <div id="loading" class="screen hidden"><p>Building the house&hellip;</p></div>
+
+    <div id="hud" class="hidden">
+      <div id="lanterns" aria-label="Lanterns lit"></div>
+      <div id="where"></div>
+      <div id="wing"></div>
+    </div>
+    <div id="crosshair" class="hidden"></div>
+    <div id="hint" class="hidden"></div>
+    <div id="prompt" class="hidden"></div>
+    <div id="compass" class="hidden" aria-hidden="true"><div id="compass-needle"></div><span>home</span></div>
+    <div id="flash"></div>
+    <div id="doubt-ripple"></div>
+    <div id="doubt-note" aria-live="polite"></div>
+    <button id="doubt-btn" type="button" class="hidden" title="Chalk a mark where something feels wrong (N)">Chalk a mark <kbd>N</kbd> <span id="chalk-count" class="chalk-count">0</span></button>
+    <div id="steer" aria-hidden="true"><span class="b">turn around</span></div>
+    <div id="thought" aria-live="polite"></div>
+    <div id="toasts" aria-live="polite"></div>
+    <div id="fps" class="hidden"></div>
+    <div id="fade"></div>
+
+    <div id="relock" class="hidden" role="button" tabindex="0">Click to continue <span>(the keys still work)</span> <button id="relock-menu" type="button">Menu (Esc)</button></div>
+
+    <div id="pause" class="screen hidden">
+      <div class="pause-card">
+        <h2>Paused</h2>
+        <button id="resume" type="button" class="primary">Keep exploring</button>
+        <div class="pause-row">
+          <button id="open-journal" type="button">Journal (Tab, J)</button>
+          <button id="open-map" type="button">Map (M)</button>
+          <button id="go-home" type="button">Thread home (H)</button>
+          <button id="new-house" type="button">New house</button>
+          <button id="end-house-pause" type="button">End this house</button>
+        </div>
+        <div class="settings">
+          <label>Field of view <input id="fov" type="range" min="55" max="100" step="1" /></label>
+          <label>Mouse sensitivity <input id="sens" type="range" min="0.3" max="2.5" step="0.05" /></label>
+          <label>Volume <input id="volume" type="range" min="0" max="1" step="0.05" /></label>
+          <label class="check"><input id="invert" type="checkbox" /> Invert look</label>
+          <label class="check"><input id="smooth" type="checkbox" /> Smooth mouse</label>
+        </div>
+        <p class="keys-line"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk &middot; <kbd>Z</kbd><kbd>C</kbd> snap turn &middot; <kbd>E</kbd> open &middot; <kbd>N</kbd> chalk a mark &middot; <kbd>Tab</kbd>/<kbd>J</kbd> journal &middot; <kbd>M</kbd> map &middot; <kbd>H</kbd> thread home &middot; <kbd>T</kbd> thread &middot; <kbd>U</kbd> sound &middot; <kbd>F</kbd> frame rate</p>
+        <p class="seed-now">Seed: <span id="seed-now"></span></p>
+      </div>
+    </div>
+
+    <div id="specimens" class="screen hidden" role="dialog" aria-label="Specimens">
+      <div class="spec-card">
+        <h2>Specimens</h2>
+        <p class="sub" id="spec-summary"></p>
+        <div id="spec-grid"></div>
+        <button id="close-specimens" type="button" class="primary">Close</button>
+      </div>
+    </div>
+
+    <div id="journal" class="hidden" role="dialog" aria-label="Journal">
+      <div class="book">
+        <section class="page left">
+          <h2>Notebook</h2>
+          <p class="sub">What this house asks of you, and what you have marked.</p>
+          <div id="guide"></div>
+        </section>
+        <section class="page right">
+          <h2>The map that cannot be drawn</h2>
+          <p class="sub">Drawn from where you have walked, as if space were ordinary. Your chalk marks are on it.</p>
+          <canvas id="map"></canvas>
+          <div class="journal-actions">
+            <button id="thread" type="button">Follow the thread home</button>
+            <button id="end-house-journal" type="button">End this house</button>
+            <button id="close-journal" type="button" class="primary">Close (Tab, J)</button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div id="ending" class="screen hidden" role="dialog" aria-label="The house, explained">
+      <div class="end-card">
+        <header>
+          <p class="kicker" id="end-kicker">you lifted the great lantern</p>
+          <h1 id="end-title">The house, explained</h1>
+          <p class="end-summary" id="end-summary"></p>
+        </header>
+        <div class="end-body">
+          <div class="end-map-wrap">
+            <canvas id="end-map"></canvas>
+            <p class="end-legend">Coloured: each impossibility&rsquo;s rooms, numbered. Chalk arrows: your marks, coloured by what they caught (grey: nothing).</p>
+            <p id="end-stray" class="end-stray"></p>
+          </div>
+          <ol id="end-list"></ol>
+        </div>
+        <div class="end-actions">
+          <button id="another" type="button" class="primary">Another house</button>
+          <button id="stay" type="button">Stay a while longer</button>
+          <button id="to-title" type="button">Title page</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="touch" class="hidden">
+      <div id="stick"><div id="nub"></div></div>
+      <button id="touch-journal" type="button">J</button>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tidal Archive</title>
+  <meta name="description" content="A narrative game set in a drowning city. Choose what Halloway will be remembered for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230c2226'/%3E%3Cpath d='M4 20q6-4 12 0t12 0v8H4z' fill='%233f8c8a'/%3E%3Crect x='11' y='7' width='10' height='12' fill='%23e9d8b4'/%3E%3Cpath d='M13 10h6M13 13h6M13 16h4' stroke='%230c2226'/%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-DDIrY_Po.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-bwdfVCHz.css">
+</head>
+<body>
+  <a class="skip" href="#place">Skip to the current place</a>
+
+  <!-- ============================================================== title -->
+  <section id="title-screen" class="title-screen" aria-labelledby="title-h">
+    <div class="title-sea" aria-hidden="true"><div class="swell s1"></div><div class="swell s2"></div><div class="swell s3"></div></div>
+    <div class="title-card">
+      <p class="title-kicker">Halloway · the fortieth day after the wall</p>
+      <h1 id="title-h">Tidal Archive</h1>
+      <p class="title-intro">Twice a day the sea comes up through the streets, and every tide it climbs a little higher.
+        You are the last archivist of the Halloway Civic Archive. You have a skiff, a borrowed diving lamp, and a Tidebook with
+        room for only twelve pages. In three days the relief boat sails with whatever you've saved.</p>
+      <p class="title-question">What should Halloway be remembered for?</p>
+      <div class="title-actions">
+        <button id="btn-new" class="primary big">Begin</button>
+        <button id="btn-continue" class="big">Continue</button>
+        <button id="btn-load-title" class="big ghost">Load…</button>
+      </div>
+      <p class="title-foot">Sound plays after you begin. Press <kbd>?</kbd> in the game for keys.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================== game -->
+  <section id="game-screen" class="game-screen" hidden>
+    <header class="hud">
+      <div class="hud-brand">Tidal Archive</div>
+      <div class="hud-clock" id="hud-clock" aria-live="off"></div>
+      <div class="hud-tide" id="hud-tide"></div>
+      <div class="hud-deadline" id="hud-deadline"></div>
+      <nav class="hud-buttons" aria-label="Game menu">
+        <button id="btn-journal" title="Journal (J)"><span aria-hidden="true">✎</span> Journal</button>
+        <button id="btn-tidebook" title="Tidebook (T)"><span aria-hidden="true">❖</span> Tidebook <span id="pages-badge" class="badge"></span></button>
+        <button id="btn-saves" title="Save or load (S)">Saves</button>
+        <button id="btn-sound" title="Sound (M)" aria-pressed="false">Sound</button>
+        <button id="btn-help" title="Keys (?)" aria-label="Help">?</button>
+      </nav>
+    </header>
+
+    <main class="play">
+      <article id="place" class="place" tabindex="-1" aria-labelledby="place-name">
+        <div id="scene" class="scene"></div>
+        <div class="place-body">
+          <p class="place-district" id="place-district"></p>
+          <h2 id="place-name" class="place-name"></h2>
+          <div id="narration" class="narration" aria-live="polite" aria-atomic="false"></div>
+          <div id="description" class="description"></div>
+          <div class="choices">
+            <section aria-labelledby="actions-h">
+              <h3 id="actions-h" class="section-h">Here</h3>
+              <div id="actions" class="action-list"></div>
+            </section>
+            <section aria-labelledby="exits-h">
+              <h3 id="exits-h" class="section-h">Ways on</h3>
+              <div id="exits" class="action-list"></div>
+            </section>
+            <section class="time-row" aria-label="Time">
+              <button id="btn-wait" class="ghost">Wait an hour</button>
+              <button id="btn-wait-tide" class="ghost">Wait for the tide to turn</button>
+              <button id="btn-leave" class="ghost danger">Leave on the Kittiwake…</button>
+            </section>
+          </div>
+        </div>
+      </article>
+
+      <aside class="map-panel" aria-label="Map of Halloway">
+        <div id="map" class="map"></div>
+        <p class="map-legend"><span class="lg here"></span> you <span class="lg reach"></span> reachable now <span class="lg drowned"></span> under water</p>
+        <div id="forecast" class="forecast" aria-label="Tide for the next twelve hours"></div>
+      </aside>
+    </main>
+    <div id="toasts" class="toasts" aria-live="polite"></div>
+  </section>
+
+  <!-- ============================================================== modals -->
+  <dialog id="dlg-doc" class="sheet doc-sheet" aria-labelledby="doc-title">
+    <div class="sheet-head"><span id="doc-kind" class="doc-kind"></span><button class="close" data-close aria-label="Close">×</button></div>
+    <article id="doc-body" class="doc"></article>
+    <footer class="sheet-foot" id="doc-foot"></footer>
+  </dialog>
+
+  <dialog id="dlg-journal" class="sheet" aria-labelledby="journal-h">
+    <div class="sheet-head"><h2 id="journal-h">Journal</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div class="tabs" role="tablist">
+      <button role="tab" data-jtab="docs" aria-selected="true">Documents</button>
+      <button role="tab" data-jtab="log" aria-selected="false">Log</button>
+      <button role="tab" data-jtab="people" aria-selected="false">People &amp; things</button>
+    </div>
+    <div id="journal-body" class="journal-body"></div>
+  </dialog>
+
+  <dialog id="dlg-tidebook" class="sheet" aria-labelledby="tb-h">
+    <div class="sheet-head"><h2 id="tb-h">The Tidebook</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div id="tidebook-body" class="tidebook-body"></div>
+  </dialog>
+
+  <dialog id="dlg-saves" class="sheet small" aria-labelledby="saves-h">
+    <div class="sheet-head"><h2 id="saves-h">Saves</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div id="saves-body"></div>
+    <p id="saves-msg" class="saves-msg" role="status"></p>
+  </dialog>
+
+  <dialog id="dlg-dialogue" class="sheet dialogue-sheet" aria-labelledby="dlg-speaker">
+    <div class="dialogue-portrait" id="dlg-portrait" aria-hidden="true"></div>
+    <div class="dialogue-main">
+      <p class="dialogue-who"><span id="dlg-speaker"></span><span id="dlg-role" class="dialogue-role"></span></p>
+      <div id="dlg-text" class="dialogue-text" aria-live="polite"></div>
+      <div id="dlg-choices" class="dialogue-choices"></div>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-puzzle" class="sheet puzzle-sheet" aria-labelledby="pz-title">
+    <div class="sheet-head"><h2 id="pz-title"></h2><button class="close" id="pz-close" aria-label="Step away">×</button></div>
+    <p id="pz-prompt" class="pz-prompt"></p>
+    <div id="pz-clues" class="pz-clues"></div>
+    <div id="pz-ui" class="pz-ui"></div>
+    <p id="pz-fail" class="pz-fail" role="alert"></p>
+  </dialog>
+
+  <dialog id="dlg-help" class="sheet small" aria-labelledby="help-h">
+    <div class="sheet-head"><h2 id="help-h">How to play</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div class="help">
+      <p>Explore by the tide. Low places are only open at low water, and some rooms can only be reached by diving. Actions and journeys take hours.
+        Find documents, read them, and choose which ones to put in the <b>Tidebook</b>. It holds twelve pages. What you save decides how the city is remembered.</p>
+      <table>
+        <tr><td><kbd>1</kbd>–<kbd>9</kbd></td><td>take the numbered action, way on, or dialogue choice</td></tr>
+        <tr><td><kbd>J</kbd> / <kbd>T</kbd> / <kbd>S</kbd></td><td>journal · Tidebook · saves</td></tr>
+        <tr><td><kbd>W</kbd></td><td>wait an hour</td></tr>
+        <tr><td><kbd>M</kbd></td><td>sound on/off</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>close a panel</td></tr>
+      </table>
+    </div>
+  </dialog>
+
+  <section id="ending-screen" class="ending-screen" hidden aria-labelledby="ending-title">
+    <div class="ending-card">
+      <p class="ending-kicker">The Kittiwake sails</p>
+      <h1 id="ending-title"></h1>
+      <div id="ending-text" class="ending-text"></div>
+      <h2 class="epitaph-h">In the Tidebook</h2>
+      <ul id="ending-epitaphs" class="epitaphs"></ul>
+      <p id="ending-stats" class="ending-stats"></p>
+      <div class="title-actions"><button id="btn-again" class="primary big">Begin again</button><button id="btn-title" class="big ghost">Title</button></div>
+    </div>
+  </section>
+
+</body>
+</html>

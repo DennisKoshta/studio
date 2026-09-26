@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event Horizon</title>
+  <script type="module" crossorigin src="./assets/index-BJWuLNhD.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C-KMXbXH.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <div class="brand"><span class="mark"></span><span class="name">EVENT HORIZON</span><span class="sub">Schwarzschild exterior · G = c = M = 1</span></div>
+      <nav id="mission-tabs" class="tabs" aria-label="Missions"></nav>
+      <div id="campaign-clock" class="campaign-clock" title="Across every completed flight plus this one: how much Stillpoint has lived, and how much you have."></div>
+      <div class="tools">
+        <button class="tool guide-btn" data-act="guide" title="Label every panel on screen (?)">What’s on screen?</button>
+        <button class="tool" data-act="help" title="How to read this screen, and all keys (H)">Help</button>
+        <button class="tool" data-act="sound" title="Sound on/off (M)"></button>
+        <div class="menu">
+          <button class="tool" data-act="save-menu" title="Save, export or import">Save ▾</button>
+          <div class="menu-list" hidden>
+            <button data-act="save">Save now</button>
+            <button data-act="export">Export save (.json)</button>
+            <button data-act="import">Import save…</button>
+            <button data-act="all-controls-menu">Show every control / guided reveal</button>
+            <button data-act="new-campaign">New expedition (clear progress)</button>
+            <input type="file" id="import-file" accept="application/json,.json" hidden />
+          </div>
+        </div>
+      </div>
+    </header>
+    <aside id="left-panel" class="panel left">
+      <div class="ltabs"><button data-tab="mission">Mission</button><button data-tab="mail">Mail <span class="badge" data-unread></span></button><button data-tab="ledger" data-feature="signals">Signals</button></div>
+      <div id="mission-panel" data-pane="mission"></div>
+      <div id="mail-panel" data-pane="mail" hidden></div>
+      <div id="ledger-panel" data-pane="ledger" hidden></div>
+    </aside>
+    <main class="stage">
+      <div class="views mode-map" id="views">
+        <div class="map-wrap">
+          <canvas id="map" aria-label="Trajectory map"></canvas>
+          <div id="hud" class="hud"></div>
+          <div id="legend" class="map-legend"></div>
+          <div id="pip" class="pip" hidden title="What a camera on the ship sees right now. Click to open the optical view (V)."><canvas id="pip-canvas" aria-label="Optical view inset"></canvas><span class="pip-label">Optical · live · click to look</span><button class="pip-x" data-act="pip-hide" title="Hide the inset">×</button></div>
+          <div class="zoom" aria-label="Map camera">
+            <button data-cam="in" title="Zoom in (+). Or scroll / pinch on the map: it zooms where the cursor is.">+</button>
+            <button data-cam="out" title="Zoom out (−)">−</button>
+            <button data-cam="ship" class="wide" title="Centre the map on the ship (Z)">Ship</button>
+            <button data-cam="fit" class="wide" title="Fit the whole trajectory, and keep fitting it (0)">Fit</button>
+            <button data-cam="follow" class="wide" title="Keep the ship in the centre while it flies (F)">Follow</button>
+          </div>
+        </div>
+        <div class="optical-wrap">
+          <canvas id="optical" aria-label="Optical view from the ship"></canvas>
+          <div class="imager" data-imager hidden title="The picture is the true ray-traced view. The resolution score is the imager’s declared instrument rule, not a change to the image."></div>
+          <div class="optical-ui">
+            <div class="seg small" data-seg="look"><button data-look="inward">Inward</button><button data-look="ahead">Ahead</button><button data-look="outward">Outward</button><button data-look="behind">Behind</button><button data-act="look-reset" title="Reset the view to look inward (double-click the view)">⟲ reset</button></div>
+            <div class="seg small" data-seg="quality" title="Ray count only; the physics per ray is unchanged"><button data-quality="low">low</button><button data-quality="medium">med</button><button data-quality="high">high</button></div>
+            <div class="seg small" data-seg="exposure" title="Exposure is an artistic tone-mapping choice"><button data-exposure="0.05">dim</button><button data-exposure="0.3">mid</button><button data-exposure="1.4">bright</button></div>
+            <span class="muted" data-optical-status></span>
+            <details class="seeing"><summary>What you’re seeing</summary><div data-seeing></div></details>
+          </div>
+        </div>
+      </div>
+      <div class="viewswitch seg small" data-seg="view"><button data-view="map">Map</button><button data-view="optical" title="See the black hole from the ship: ray-traced in the same spacetime (V)">◉ Optical</button><button data-view="split">Split</button></div>
+      <div id="cta" class="cta" hidden></div>
+      <div id="mailpill" class="mailpill" hidden></div>
+      <div id="confirm" class="debrief confirm" hidden></div>
+      <div id="coach" class="coach" hidden></div>
+      <div id="toasts" class="toasts"></div>
+      <div id="debrief" class="debrief" hidden></div>
+      <div id="help" class="debrief help" hidden></div>
+      <div class="strip-wrap"><canvas id="strip" aria-label="Radius over time"></canvas></div>
+    </main>
+    <aside id="flight-panel" class="panel right"></aside>
+    <nav id="phone-nav" aria-label="Screens"><button data-ph="mission">Mission <span class="badge" data-ph-unread></span></button><button data-ph="view">View</button><button data-ph="flight">Flight</button><button class="ph-fly" data-act="toggle">Fly ▶</button></nav>
+  </div>
+  <div id="phone-note" class="phone-note" role="note" hidden><span>Best played on a larger screen; landscape recommended.</span><button type="button">Got it</button></div>
+  <div id="callout" class="callout" role="dialog" aria-live="polite" hidden></div>
+  <div id="guide" class="guide" hidden></div>
+</body>
+</html>

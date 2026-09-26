@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Afterimage</title>
+  <script type="module" crossorigin src="./assets/index-BSHnXhT-.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DAiUx26-.css">
+</head>
+<body>
+  <canvas id="view" tabindex="0" aria-label="Chandler's Court. Use the map (M) for a list of places and things."></canvas>
+  <div id="reticle" aria-hidden="true"></div>
+  <div id="hud-left">
+    <header id="era" aria-live="polite">
+      <div class="year" id="era-year"></div>
+      <div class="when" id="era-when"></div>
+      <div class="history" id="era-history"></div>
+    </header>
+    <div id="captions" aria-live="polite" aria-label="Sound captions"></div>
+  </div>
+  <nav id="toolbar" aria-label="Tools">
+    <button id="btn-notebook" title="Notebook (N)"><span class="k">N</span> Notebook</button>
+    <button id="btn-map" title="Map and places (M)"><span class="k">M</span> Map</button>
+    <button id="btn-help" title="Controls (H)"><span class="k">H</span> Help</button>
+    <button id="btn-sound" title="Sound on/off" aria-pressed="true">Sound on</button>
+  </nav>
+  <div id="prompt" role="status" aria-live="polite"></div>
+  <div id="look" role="status" aria-live="polite"></div>
+  <div id="hint"></div>
+  <div id="fade" aria-hidden="true"><div class="fade-year" id="fade-year"></div><div class="fade-when" id="fade-when"></div></div>
+
+  <section id="title" class="overlay" role="dialog" aria-modal="true" aria-labelledby="title-h">
+    <div class="title-card">
+      <h1 id="title-h">Afterimage</h1>
+      <p class="sub">Chandler's Court, Aldermoor</p>
+      <p class="honest">Chandler's Court, Aldermoor and everyone in it are invented. No real place or family is being reconstructed.</p>
+      <p class="setup">Maya Sołtys-Hale has asked you to Chandler's Court. She has a notebook for you, and the key to the Long Room: a door that opens onto the same courtyard in another year.</p>
+      <button id="btn-begin" class="primary">Begin</button>
+      <p class="small">Sound is optional: every sound that matters is also written on screen.</p>
+    </div>
+  </section>
+
+  <section id="panel-notebook" class="panel notebook" role="dialog" aria-modal="true" aria-labelledby="nb-h" hidden>
+    <div class="panel-head">
+      <h2 id="nb-h">Maya's notebook</h2>
+      <button class="close" data-close aria-label="Close notebook">Close <span class="k">Esc</span></button>
+    </div>
+    <blockquote class="maya" id="nb-maya"></blockquote>
+    <div class="nb-history">
+      <div><span class="label">Now:</span> <strong id="nb-current"></strong></div>
+      <div class="nb-actions">
+        <button id="nb-undo">Undo change</button>
+        <button id="nb-redo">Redo</button>
+        <button id="nb-compare">Compare with before</button>
+      </div>
+    </div>
+    <section id="nb-told" class="told" aria-labelledby="nb-told-h"></section>
+    <p class="legend"><b>Seen</b> is what you looked at. <b>Said</b> is what someone told you; people can be wrong. <b>Inferred</b> is what you think. Entries from a history you have changed stay, marked <span class="former-tag">former history</span>.</p>
+    <div class="columns">
+      <section aria-labelledby="col-seen"><h3 id="col-seen">Seen</h3><ol id="nb-seen"></ol></section>
+      <section aria-labelledby="col-said"><h3 id="col-said">Said</h3><ol id="nb-said"></ol></section>
+      <section aria-labelledby="col-inferred"><h3 id="col-inferred">Inferred</h3><ol id="nb-inferred"></ol>
+        <form id="nb-note-form"><label for="nb-note">Write what you think happened</label><textarea id="nb-note" rows="3" maxlength="4000" placeholder="e.g. Nobody rang the bell that night."></textarea><button type="submit">Add to Inferred</button></form>
+      </section>
+    </div>
+    <div class="nb-foot">
+      <button id="nb-save">Save</button>
+      <button id="nb-load">Load</button>
+      <button id="nb-export">Export notebook</button>
+      <span id="nb-status" role="status"></span>
+    </div>
+  </section>
+
+  <section id="panel-compare" class="panel compare" role="dialog" aria-modal="true" aria-labelledby="cmp-h" hidden>
+    <div class="panel-head">
+      <h2 id="cmp-h">Compare histories <span class="ro">read-only</span></h2>
+      <button class="close" data-close aria-label="Close comparison">Close <span class="k">Esc</span></button>
+    </div>
+    <div class="cmp-against" role="radiogroup" aria-label="Compare now with">
+      <span class="label">Compare now with</span>
+      <button role="radio" id="cmp-vs-previous" aria-checked="true">the history before your last change</button>
+      <button role="radio" id="cmp-vs-original" aria-checked="false">the history as you found it</button>
+      <span id="cmp-vs-same" class="cmp-same"></span>
+    </div>
+    <div class="cmp-tabs" role="tablist">
+      <button role="tab" id="cmp-tab-3" aria-selected="true">2026</button>
+      <button role="tab" id="cmp-tab-2" aria-selected="false">1991</button>
+      <button role="tab" id="cmp-tab-1" aria-selected="false">1958</button>
+      <button role="tab" id="cmp-tab-0" aria-selected="false">1926</button>
+    </div>
+    <div class="cmp-heads"><div><span class="label" id="cmp-before-label">Before</span> <strong id="cmp-before"></strong></div><div><span class="label">Now</span> <strong id="cmp-after"></strong></div></div>
+    <div id="cmp-views"></div>
+    <div id="cmp-rows"></div>
+    <div class="cmp-actions">
+      <button id="cmp-keep" class="primary">Keep this history</button>
+      <button id="cmp-undo">Undo: return to before</button>
+    </div>
+  </section>
+
+  <section id="panel-map" class="panel map" role="dialog" aria-modal="true" aria-labelledby="map-h" hidden>
+    <div class="panel-head">
+      <h2 id="map-h">The Court</h2>
+      <button class="close" data-close aria-label="Close map">Close <span class="k">Esc</span></button>
+    </div>
+    <div class="map-body scroller" tabindex="-1">
+      <div id="map-plan"></div>
+      <div class="map-lists">
+        <h3>Go to the door of</h3><div id="map-places" class="list"></div>
+        <h3>The key</h3><div id="map-travel" class="list"></div>
+        <h3>Go to someone or something</h3><div id="map-things" class="things"></div>
+        <p class="map-note">You arrive a couple of steps away, facing them. Green dots on the plan are things worth a look.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-help" class="panel help" role="dialog" aria-modal="true" aria-labelledby="help-h" hidden>
+    <div class="panel-head">
+      <h2 id="help-h">How to move and look</h2>
+      <button class="close" data-close aria-label="Close help">Close <span class="k">Esc</span></button>
+    </div>
+    <dl class="keys">
+      <dt><span class="k">W A S D</span> or <span class="k">↑ ↓</span></dt><dd>Walk. <span class="k">Shift</span> to hurry.</dd>
+      <dt><span class="k">← →</span> or drag</dt><dd>Turn. Click the view to use the mouse to look; <span class="k">Esc</span> releases it.</dd>
+      <dt><span class="k">R</span> <span class="k">F</span> or <span class="k">PgUp</span> <span class="k">PgDn</span></dt><dd>Look up and down (for a low desk, or the bell over the arch).</dd>
+      <dt><span class="k">E</span>, <span class="k">Enter</span> or click</dt><dd>Look at or use what you're facing: the nearest thing roughly in the middle of your view glows, and the prompt names it. People are easier: walk up to someone and they stop for you; E talks to whoever is nearest in view.</dd>
+      <dt><span class="k">N</span></dt><dd>Maya's notebook: what you've seen, what people said, what you think. Undo and compare live here.</dd>
+      <dt><span class="k">M</span></dt><dd>The map: go to the doorway of any part of the Court, or straight to a person or a thing worth a look. You can also travel with the key from here.</dd>
+      <dt><span class="k">Tab</span></dt><dd>Moves between buttons in any open panel. Number keys pick conversation replies.</dd>
+    </dl>
+    <p>The Long Room door is where the key works. Turn it to choose a year: <b>New Year's Eve 1926</b>, <b>March 1958</b>, <b>April 1991</b>, or back to Maya's <b>2026</b>. You arrive standing where you stand (unless that place doesn't exist in that year).</p>
+    <p class="honest">Chandler's Court and its people are invented.</p>
+  </section>
+
+  <section id="panel-book" class="panel book" role="dialog" aria-modal="true" aria-labelledby="book-h" hidden>
+    <div class="panel-head">
+      <h2 id="book-h">The Court Book</h2>
+      <button class="close" data-close aria-label="Put the book back">Put it back <span class="k">Esc</span></button>
+    </div>
+    <p class="book-where" id="book-where"></p>
+    <div class="book-page" id="book-page"></div>
+    <div class="book-noted"><span class="tag" id="book-noted-tag"></span><p id="book-noted"></p></div>
+  </section>
+
+  <section id="panel-ending" class="panel ending" role="dialog" aria-modal="true" aria-labelledby="end-h" hidden>
+    <div class="end-scroll scroller" id="end-scroll">
+      <p class="end-kicker">What you tell Maya</p>
+      <h2 id="end-h"></h2>
+      <div id="end-account" class="end-account"></div>
+      <div id="end-beat" class="end-beat"></div>
+      <div class="end-actions" id="end-actions">
+        <button id="end-walk" class="primary">Walk on</button>
+        <button id="end-again">Tell her something else</button>
+      </div>
+      <p class="end-note">Saved in Maya's notebook, with this history. Change the past and you can tell her again.</p>
+    </div>
+  </section>
+
+  <section id="panel-talk" class="panel talk" role="dialog" aria-modal="true" aria-labelledby="talk-h" hidden>
+    <h2 id="talk-h" class="talk-h"></h2>
+    <div id="talk-lines" aria-live="polite"></div>
+    <div id="talk-preview" hidden></div>
+    <div id="talk-options" role="group" aria-label="Replies"></div>
+  </section>
+  <input type="file" id="load-file" accept=".json,application/json" hidden>
+</body>
+</html>

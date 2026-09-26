@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Automata</title>
+ <meta name="description" content="Draw a movement, and a real cam appears to make it. Build small moving sculptures.">
+  <script type="module" crossorigin src="./assets/index-euegKV4Y.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Bmx7sU2q.css">
+</head>
+<body>
+ <header>
+  <h1>Automata <small>draw the movement, discover the machine</small></h1>
+  <nav><button id="undo" title="Undo (Ctrl+Z)">↶ Undo</button><button id="redo" title="Redo (Ctrl+Shift+Z)">↷ Redo</button><button id="reset">Restore original</button>
+   <span class="sep"></span><button id="save" title="Keep this sculpture in your gallery (this browser)">Save…</button><button id="savefile" title="Download the sculpture as a file you can share">Save file</button><label class="button" title="Open a sculpture file (.json, up to 256 KiB)">Open a file<input id="open-file" type="file" accept=".json,application/json" hidden></label>
+   <span class="sep"></span><button id="scan">Check for collisions</button><button id="export">Parts to cut (SVG)</button></nav>
+ </header>
+ <main>
+  <aside>
+   <section><h2>Sculptures</h2><div id="scenes"></div><div id="mine"></div></section>
+   <section id="goal"></section>
+   <section><h2>Parts of <span id="title"></span></h2><div id="palette"></div><div id="modules"></div></section>
+   <nav id="tabs" role="tablist"><button data-tab="part" role="tab">Shape</button><button data-tab="figures" role="tab">Figures</button><button data-tab="moment" role="tab">Moment</button></nav>
+   <section id="module-editor"></section>
+   <section id="issues" aria-live="polite"></section>
+   <p class="honest">Ideal rigid parts: no friction, springs or weight. Cams assume the follower is held against them (a real one needs gravity or a rubber band). Shafts, pins and the crank handle are extra hardware. Collision checks sample the turn; they are evidence, not a guarantee. Nothing here has been built from real wood yet.</p>
+  </aside>
+  <section id="workshop">
+   <div id="stage"><div id="moment" role="status"></div>
+    <div id="views" role="toolbar" aria-label="Camera views"><div class="vbtns"><button data-view="front" title="Look straight at the front, locked (drag pans, the wheel zooms): best for arranging left–right and up–down">Front</button><button data-view="side" title="Look from the side, locked: depth runs left (toward the back) to right (toward you)">Side</button><button data-view="top" title="Look down from above, locked: toward you is at the bottom">Top</button><button data-view="free" title="Orbit freely: drag to look around">Free</button><button id="frame" data-frameall="1" title="Frame the whole machine">Frame</button></div>
+     <label class="arrange" title="Picking a figure to arrange swings to the Front view; your view comes back when you’re done"><input type="checkbox" id="arrange-front"> Front view while arranging</label><span id="view-note"></span></div>
+    <div id="frame-hint" hidden>Part of your machine is out of view. <button data-frameall="1" class="primary">Frame everything</button><button class="x" data-hintx="1" aria-label="Keep my view" title="Keep my view">×</button></div><div id="bench-hint" hidden><b>An empty bench.</b> Just the crank and its shaft. Add a part on the left, and it will appear here, turning.</div><div id="stale" hidden>Showing the last machine that worked. Your latest change can’t be built yet (see the left panel).</div><div id="scan-result" role="status"></div><div id="toast" role="status"></div></div>
+   <div id="controls"><button id="play">❚❚ Pause</button><label>speed <input id="speed" type="range" min="0.05" max="1.2" step="0.05" value="0.35"></label><canvas id="crank" width="96" height="96" title="Drag round to turn the crank by hand"></canvas><span class="hint">drag the dial to turn by hand · drag a figure to move it · drag the scene to look around</span></div>
+   <div id="timeline"></div>
+  </section>
+  <button id="sheet-toggle" type="button" aria-expanded="false" title="Give the panel more room, or the machine">▲ More room for the panel</button>
+ </main>
+ <dialog id="save-dialog"><form id="save-form"><h3>Save to your sculptures</h3><label>Name <input id="save-name" maxlength="60" required autocomplete="off"></label><p id="save-why" class="warnline"></p><p class="hint">Kept in this browser. To share it, use “Save file”.</p><div class="fixes"><button type="submit" class="primary">Save</button><button type="button" id="save-cancel">Cancel</button></div></form></dialog>
+</body>
+</html>

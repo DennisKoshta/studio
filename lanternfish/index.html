@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lanternfish LF-16</title>
+  <meta name="description" content="A fantasy 16-bit computer with its own assembler, compiler, debugger and software." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='24' cy='7' r='4' fill='%23ffe38a'/%3E%3Cpath d='M4 18c4-7 14-9 20-3-3 6-13 9-20 3z' fill='%233aadd0'/%3E%3Cpath d='M17 11 Q22 4 24 7' stroke='%23ffe38a' fill='none' stroke-width='1.5'/%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-BY25S_39.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-IwGBeptY.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand" aria-label="Lanternfish LF-16">
+      <svg class="logo" viewBox="0 0 40 32" aria-hidden="true">
+        <path d="M22 13 Q26 3 33 6" stroke="#ffe38a" stroke-width="1.6" fill="none" />
+        <circle class="lure" cx="33" cy="6" r="3.2" fill="#ffe38a" />
+        <path d="M3 20 C8 10 21 9 27 17 C21 25 9 27 3 20 Z" fill="#3aadd0" />
+        <path d="M3 20 L0 15 L1 20 L0 25 Z" fill="#26a" />
+        <circle cx="22" cy="17" r="1.6" fill="#012" />
+        <path d="M18 21 l2 1 l2-1" stroke="#8ef" stroke-width="1" fill="none" />
+      </svg>
+      <span class="brand-name">Lanternfish</span><span class="brand-chip">LF-16</span>
+    </div>
+    <div class="group">
+      <label class="sr" for="file-select">Program</label>
+      <select id="file-select" title="Open a program"></select>
+      <button id="btn-new" title="New file">New</button>
+      <button id="btn-revert" title="Restore the shipped version of this example">Revert</button>
+      <button id="btn-import" title="Open a .lfa, .glint or .lfc.json file">Import</button>
+      <button id="btn-export" title="Download the built cartridge (.lfc.json)">Export</button>
+      <input type="file" id="file-input" accept=".lfa,.glint,.json,.txt" hidden />
+    </div>
+    <div class="group transport">
+      <button id="btn-build" class="accent" title="Build and run (Ctrl+Enter)">▶ Build &amp; Run</button>
+      <button id="btn-run" title="Pause / continue (F8)">⏸ Pause</button>
+      <button id="btn-step" title="Step into (F11)">Step</button>
+      <button id="btn-over" title="Step over (F10)">Over</button>
+      <button id="btn-reset" title="Reset machine (Ctrl+Shift+R)">Reset</button>
+      <label class="sr" for="speed">Speed</label>
+      <select id="speed" title="Emulation speed">
+        <option value="0.25">¼×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="8">8×</option>
+      </select>
+      <button id="btn-mute" title="Toggle sound" aria-pressed="false">🔈 Sound</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="pane editor-pane" aria-label="Source editor">
+      <div class="pane-head">
+        <span id="file-name" class="file-name">—</span>
+        <span id="build-state" class="build-state"></span>
+        <button id="btn-view-asm" class="small" title="Show the assembly generated from Glint" hidden>view .lfa</button>
+      </div>
+      <div id="editor" class="editor"></div>
+      <div id="problems" class="problems" role="log" aria-live="polite"></div>
+    </section>
+
+    <section class="pane machine-pane" aria-label="Machine">
+      <div class="screen-wrap">
+        <canvas id="screen" width="160" height="120" tabindex="0" aria-label="LF-16 screen. Focus it to send keyboard input."></canvas>
+        <div id="screen-hint" class="screen-hint">click the screen to play · arrows/WASD · Z/J = A · X/K = B · Enter = Start</div>
+        <div id="halt-banner" class="halt-banner" hidden></div>
+      </div>
+      <div class="statusline" aria-live="off">
+        <span id="st-status" class="pill">idle</span>
+        <span>PC <b id="st-pc">0000</b></span>
+        <span>frame <b id="st-frame">0</b></span>
+        <span><b id="st-mhz">0.0</b> MHz</span>
+        <span><b id="st-fps">0</b> fps</span>
+        <span>load <b id="st-load">0%</b></span>
+      </div>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="regs" aria-selected="true">Registers</button>
+        <button role="tab" data-tab="disasm">Disassembly</button>
+        <button role="tab" data-tab="memory">Memory</button>
+        <button role="tab" data-tab="serial">Serial <span id="serial-badge" class="badge" hidden></span></button>
+        <button role="tab" data-tab="sound">Sound</button>
+        <button role="tab" data-tab="help">Help</button>
+      </nav>
+      <div class="tabpanels">
+        <div class="tabpanel" data-panel="regs"><div id="regs"></div></div>
+        <div class="tabpanel" data-panel="disasm" hidden><div id="disasm" class="mono"></div></div>
+        <div class="tabpanel" data-panel="memory" hidden>
+          <div class="mem-bar">
+            <label>addr <input id="mem-addr" value="C000" size="6" spellcheck="false" /></label>
+            <button class="small" data-mem="pc">PC</button><button class="small" data-mem="sp">SP</button>
+            <button class="small" data-mem="0000">0000</button><button class="small" data-mem="C000">VRAM</button><button class="small" data-mem="FF00">I/O</button>
+          </div>
+          <div id="memory" class="mono"></div>
+        </div>
+        <div class="tabpanel" data-panel="serial" hidden>
+          <pre id="serial-out" class="serial-out" aria-live="polite"></pre>
+          <form id="serial-form" class="serial-form">
+            <label class="sr" for="serial-in">Serial input</label>
+            <input id="serial-in" placeholder="type to the serial port, Enter sends a line" autocomplete="off" spellcheck="false" />
+            <button class="small" type="button" id="serial-clear">clear</button>
+          </form>
+        </div>
+        <div class="tabpanel" data-panel="sound" hidden><div id="sound"></div></div>
+        <div class="tabpanel help" data-panel="help" hidden>
+          <h3>Keys</h3>
+          <table>
+            <tr><td><kbd>Ctrl</kbd>+<kbd>Enter</kbd></td><td>build &amp; run</td></tr>
+            <tr><td><kbd>F8</kbd></td><td>pause / continue</td></tr>
+            <tr><td><kbd>F10</kbd> / <kbd>F11</kbd></td><td>step over / step into (a source line for Glint, an instruction for assembly)</td></tr>
+            <tr><td>gutter click</td><td>toggle breakpoint</td></tr>
+            <tr><td>screen focused</td><td>arrows/WASD = d-pad · Z/J = A · X/K = B · Enter = Start · Shift = Select; every key is also queued on <code>KEY</code></td></tr>
+          </table>
+          <h3>The machine</h3>
+          <p>16 registers (<code>r15 = sp</code>), 64 KiB, 4 MHz, 160×120 in 16 colours, a blitter, and four voices. Assembly files are <code>.lfa</code>, and the C-like Glint language is <code>.glint</code>.
+             The full references are <code>docs/SPEC.md</code>, <code>docs/ASSEMBLY.md</code> and <code>docs/GLINT.md</code> in the repository.</p>
+          <h3>Tiny example</h3>
+<pre class="mono">start:  li r1, BLT_COLOR
+        li r0, 9          ; amber
+        st [r1], r0
+        li r1, BLT_CMD
+        li r0, BLT_CLEAR
+        st [r1], r0
+.hold:  wait
+        jmp .hold</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+  <dialog id="asm-dialog" class="asm-dialog">
+    <form method="dialog"><div class="pane-head"><b>Generated assembly</b><button class="small">close</button></div></form>
+    <pre id="asm-text" class="mono"></pre>
+  </dialog>
+</body>
+</html>
